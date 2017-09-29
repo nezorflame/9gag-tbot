@@ -90,6 +90,6 @@ func getHot(count int) {
 	}
 
 	for _, p := range resp.Data.Posts {
-		fmt.Println(html.UnescapeString(p.Title), p.URL)
+		fmt.Println(html.UnescapeString(p.Title), p.URL, p.Images.Image700.URL)
 	}
 }

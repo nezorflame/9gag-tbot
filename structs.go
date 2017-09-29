@@ -99,7 +99,12 @@ type PostData struct {
 	SortTs           int  `json:"sortTs"`
 	OrderID          int  `json:"orderId"`
 	HasLongPostCover byte `json:"hasLongPostCover"`
-	// Images struct
+	Images           struct {
+		Image700         Image `json:"image700"`
+		Image460         Image `json:"image460"`
+		Image220x145     Image `json:"image220x145"`
+		ImageFbThumbnail Image `json:"imageFbThumbnail"`
+	} `json:"images"`
 	SourceDomain       string `json:"sourceDomain"`
 	SourceURL          string `json:"sourceUrl"`
 	ExternalURL        string `json:"externalUrl"`
@@ -117,5 +122,20 @@ type PostData struct {
 	// TopComments struct
 	// TargetedAdTags struct
 	Sections []string `json:"sections"`
-	// Tags struct
+	Tags     []Tag    `json:"tags"`
+}
+
+// Image describes image data from PostData
+type Image struct {
+	Width       int    `json:"width"`
+	Height      int    `json:"height"`
+	URL         string `json:"url"`
+	Mask        string `json:"mask"`
+	Placeholder string `json:"placeholder"`
+}
+
+// Tag describes tag data from PostData
+type Tag struct {
+	Key string `json:"key"`
+	URL string `json:"url"`
 }

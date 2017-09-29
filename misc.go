@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"crypto/sha1"
 	"fmt"
+	"hash"
 	"log"
 	"strconv"
 	"time"
@@ -28,25 +29,19 @@ func randomUUIDHexStr() string {
 }
 
 func randomSHA1HexStr() string {
-	return getSHA1HexStr(strconv.FormatInt(time.Now().Unix(), 10))
+	return getHashedHexStr(sha1.New(), strconv.FormatInt(time.Now().Unix(), 10))
 }
 
 func getSHA1HexStr(str string) string {
-	var err error
-	h := sha1.New()
-
-	if str, err = charmap.ISO8859_1.NewEncoder().String(str); err != nil {
-		log.Fatal(err)
-	}
-
-	h.Write([]byte(str))
-
-	return fmt.Sprintf("%x", h.Sum(nil))
+	return getHashedHexStr(sha1.New(), str)
 }
 
 func getMD5HexStr(str string) string {
+	return getHashedHexStr(md5.New(), str)
+}
+
+func getHashedHexStr(h hash.Hash, str string) string {
 	var err error
-	h := md5.New()
 
 	if str, err = charmap.ISO8859_1.NewEncoder().String(str); err != nil {
 		log.Fatal(err)
